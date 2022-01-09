@@ -4,6 +4,20 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
+/**
+ * 1、最大线段重合问题（用堆实现）
+ * 给定很多线段，每个线段都有两个数[start,end]
+ * 表示线段开始位置和结束位置，左右都是闭区间
+ * 规定：线段的开始和结束位置一定都是整数值
+ * 		线段重合区域的长度必须>=1
+ * 		返回线段最多重合区域中，包含了几条线段
+ * 	阶梯方法：
+ * 	1）统计找每个小数位的区间有多少线段，求最大值得出结果
+ * 	2）利用小根堆，根据线段开始的值进行排序，将线段的结束值依次加入到小根堆
+ * 	   堆顶元素小于等于当前结束值时弹出，弹出后的堆的大小即是包含的线段数
+ * 	   取最大值即可得到结果
+ * 	   思路：每条线段开始的点，有多少个能够进行穿过，找出最多的
+ */
 public class Code01_CoverMax {
 
 	public static int maxCover1(int[][] lines) {
@@ -31,6 +45,7 @@ public class Code01_CoverMax {
 		for (int i = 0; i < m.length; i++) {
 			lines[i] = new Line(m[i][0], m[i][1]);
 		}
+		// 按线段开始值排序
 		Arrays.sort(lines, new StartComparator());
 		// 小根堆，每一条线段的结尾数值，使用默认的
 		PriorityQueue<Integer> heap = new PriorityQueue<>();

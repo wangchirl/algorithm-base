@@ -2,6 +2,27 @@ package class12;
 
 import java.util.ArrayList;
 
+/**
+ * 1、二叉树递归套路
+ * 	1）给定一棵二叉树的头节点head，
+ * 	  返回这颗二叉树中最大的二叉搜索子树的大小
+ *
+ * 	思路：
+ * 	1.X结点不做头
+ * 		左树上的最大二叉搜索树
+ * 		右树上的最大二叉搜索树
+ * 	2.X做头结点
+ * 		左树最大值得小于X结点
+ * 	  且右树最小值得大于X结点
+ * 	  且左右子树得都是二叉搜索树
+ * 	  	最大二叉搜索树 = 左子树结点数 + 右子树结点数 + 1
+ *	info {
+ *	   int maxBSTSize;
+ *	   int size;
+ *	   int min;
+ *	   int max;
+ *	}
+ */
 public class Code05_MaxSubBSTSize {
 
 	public static class Node {

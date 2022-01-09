@@ -1,5 +1,11 @@
 package class11;
 
+/**
+ * 1、给你二叉树中的某个节点，返回该节点中序遍历的后继节点
+ * 	1）中序 -> 左中右
+ * 	2）存在右子树的情况 -> 右子树最左的结点
+ * 	3）不存在右子树的情况 -> 找父节点，直到找到一个结点是其父节点的左结点时，或为null时
+ */
 public class Code06_SuccessorNode {
 
 	public static class Node {
@@ -17,10 +23,13 @@ public class Code06_SuccessorNode {
 		if (node == null) {
 			return node;
 		}
+		// 1.存在右子树 -> 右子树的最左侧结点
 		if (node.right != null) {
 			return getLeftMost(node.right);
-		} else { // 无右子树
+		} else {
+			// 2.无右子树 -> 找父节点
 			Node parent = node.parent;
+			// 为空时或是其父节点的左结点时退出
 			while (parent != null && parent.right == node) { // 当前节点是其父亲节点右孩子
 				node = parent;
 				parent = node.parent;

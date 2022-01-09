@@ -4,6 +4,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * 1、二叉树递归套路
+ *  给定一棵二叉树的头节点head，任何两个节点之间都存在距离，
+ * 	返回整棵二叉树的最大距离
+ *
+ * 	思路：
+ * 	1.与X结点无关的情况（左右子树中最大的距离）：
+ * 		X左树的最大距离
+ * 		X右树的最大距离
+ * 	2.与X结点有关的情况：X左树与X右树的高度和 + 1
+ * 		左树高度 + 右树高度 + 1
+ *
+ * 	需要向左右子树获取到的信息：
+ * 	1.子树的最大距离
+ * 	2.子树的高度
+ *
+ * 	Info{
+ * 	    int maxD;
+ * 	    int height;
+ * 	}
+ */
 public class Code06_MaxDistance {
 
 	public static class Node {

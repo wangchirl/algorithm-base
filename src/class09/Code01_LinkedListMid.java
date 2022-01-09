@@ -2,12 +2,20 @@ package class09;
 
 import java.util.ArrayList;
 
+/**
+ * 1、链表问题
+ * 	1）使用容器（哈希表，数组等）
+ * 	2）快慢指针
+ *		1.输入链表头节点，奇数长度返回中点，偶数长度返回上中点
+ * 		2.输入链表头节点，奇数长度返回中点，偶数长度返回下中点
+ * 		3.输入链表头节点，奇数长度返回中点前一个，偶数长度返回上中点前一个
+ * 		4.输入链表头节点，奇数长度返回中点前一个，偶数长度返回下中点前一个
+ */
 public class Code01_LinkedListMid {
 
 	public static class Node {
 		public int value;
 		public Node next;
-
 		public Node(int v) {
 			value = v;
 		}
@@ -15,12 +23,14 @@ public class Code01_LinkedListMid {
 
 	// head 头
 	public static Node midOrUpMidNode(Node head) {
+		// 空链表 or 1个结点的链表 or 2个结点的链表，返回头
 		if (head == null || head.next == null || head.next.next == null) {
 			return head;
 		}
 		// 链表有3个点或以上
 		Node slow = head.next;
 		Node fast = head.next.next;
+		// 快慢指针，慢指针一次走一步，快指针一次走两步
 		while (fast.next != null && fast.next.next != null) {
 			slow = slow.next;
 			fast = fast.next.next;

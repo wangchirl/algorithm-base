@@ -1,5 +1,18 @@
 package class12;
 
+/**
+ * 1、二叉树递归套路
+ * 	1）给定一棵二叉树的头节点head，返回这颗二叉树是不是满二叉树
+ *	   结点数与高度的关系：节点数 = 2^h - 1
+ *
+ *	需要向左右子树获取到的信息：
+ *	1.结点数
+ *	2.高度
+ *	Info {
+ *	   int size;
+ *	   int height;
+ *	}
+ */
 public class Code04_IsFull {
 
 	public static class Node {

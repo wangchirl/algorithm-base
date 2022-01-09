@@ -3,6 +3,14 @@ package class06;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
+/**
+ * 1、堆排序
+ * 	1）将数组调整为大根堆
+ * 	2）将数组 0 位置的元素与 N-1 位置的元素进行交换
+ * 	3）heapSize--
+ * 	4）数组 0 位置的元素 heapIfy 调整堆结构，继续保持大根堆
+ * 	5）重新将 0 位置的元素与 N-2 位置的元素进行交换，周而复始，直到 heapSize = 1
+ */
 public class Code03_HeapSort {
 
 	// 堆排序额外空间复杂度O(1)
@@ -10,18 +18,24 @@ public class Code03_HeapSort {
 		if (arr == null || arr.length < 2) {
 			return;
 		}
+		// 建立大根堆方式 1 一个一个往堆上放，从上往下建堆
 		// O(N*logN)
 //		for (int i = 0; i < arr.length; i++) { // O(N)
 //			heapInsert(arr, i); // O(logN)
 //		}
+		// 建立大根堆方式 2 从下往上建堆
 		// O(N)
 		for (int i = arr.length - 1; i >= 0; i--) {
 			heapify(arr, i, arr.length);
 		}
+		// heapSize
 		int heapSize = arr.length;
+		// 0 位置与最后一个元素进行交换，heapSize-1
 		swap(arr, 0, --heapSize);
 		// O(N*logN)
-		while (heapSize > 0) { // O(N)
+		// 只要 heapSize 不为1，继续周而复始
+		while (heapSize > 1) { // O(N)
+			// 调整大根堆
 			heapify(arr, 0, heapSize); // O(logN)
 			swap(arr, 0, --heapSize); // O(1)
 		}

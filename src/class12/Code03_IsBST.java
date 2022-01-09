@@ -2,13 +2,33 @@ package class12;
 
 import java.util.ArrayList;
 
-public class Code02_IsBST {
+/**
+ * 1、二叉树递归套路
+ * 	1）判断一棵树是否二叉搜索树
+ *
+ * 	思路：
+ * 	1.左子树都是二次搜索树
+ * 	2.右子树都是二次搜索树
+ * 	3.左树的最大值要比当前结点的值小
+ * 	4.右树的最小值要比当前结点的值大
+ *
+ * 	需要向左右子树获取到的信息：
+ * 	1.子树是否二叉搜索树
+ * 	2.树的最小值
+ * 	3.树的最大值
+ *
+ * 	Info{
+ * 	    bool isBST;
+ * 	    int min;
+ * 	    int max;
+ * 	}
+ */
+public class Code03_IsBST {
 
 	public static class Node {
 		public int value;
 		public Node left;
 		public Node right;
-
 		public Node(int data) {
 			this.value = data;
 		}

@@ -1,6 +1,25 @@
 package class12;
 
-public class Code03_IsBalanced {
+/**
+ * 1、二叉树递归套路
+ * 	1）判断一颗二叉树是否平衡二叉树：左右子树的高度不超过1
+ *
+ *	思路：
+ *	1.左树是平衡的
+ *	2.右树是平衡的
+ *	3.左树和右树的高度差不超过2
+ *
+ *	需要向左右子树获取到的信息：
+ *	1.左右子树是否平衡
+ *	2.左右子树的高度
+ *
+ * Info{
+ *     bool isB;
+ *     int height;
+ * }
+ *
+ */
+public class Code02_IsBalanced {
 
 	public static class Node {
 		public int value;

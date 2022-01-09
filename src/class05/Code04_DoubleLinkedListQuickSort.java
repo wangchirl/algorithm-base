@@ -8,6 +8,10 @@ import java.util.Comparator;
 // 作为补充放在这，有需要的同学可以看看
 // 和课上讲的数组的经典快速排序在算法上没有区别
 // 但是coding需要更小心
+
+/**
+ * 看一下
+ */
 public class Code04_DoubleLinkedListQuickSort {
 
 	public static class Node {

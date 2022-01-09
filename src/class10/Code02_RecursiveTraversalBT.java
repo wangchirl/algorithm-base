@@ -1,5 +1,28 @@
 package class10;
 
+/**
+ * 1、二叉树
+ *	1）二叉树遍历
+ *		1.先序：头左右
+ *		2.中序：左头右
+ *		3.后续：左右头
+ *	2）递归序：每一个结点都来到三次
+ *		   a
+ *		  ↙ ↘
+ *		b     c
+ *	   ↙ ↘	 ↙ ↘
+ *	  d   e	f   g
+ *
+ *	递归序：a b d d d b e e e b a c f f f c g g g c a
+ * 	  先序：第一次来到就结点就结算
+ * 	  	   a b d e c f g
+ * 	  中序：第二次来到结点就结算
+ * 	  	   d b e a f c g
+ * 	  后续：第三次来到结点就结算
+ * 	  	   d e b f g c a
+ *
+ *  结论：X结点在先序之前的数 与 X结点在后序之后的数 取交集，一定是X结点的父节点
+ */
 public class Code02_RecursiveTraversalBT {
 
 	public static class Node {
@@ -16,11 +39,11 @@ public class Code02_RecursiveTraversalBT {
 		if (head == null) {
 			return;
 		}
-		// 1
+		// 1 先序
 		f(head.left);
-		// 2
+		// 2 中序
 		f(head.right);
-		// 3
+		// 3 后序
 	}
 
 	// 先序打印所有节点

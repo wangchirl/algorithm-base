@@ -1,5 +1,18 @@
 package class09;
 
+/**
+ * 1、将单向链表按某值划分成左边小、中间相等、右边大的形式
+ *
+ * 解题思路：
+ * 	1）把链表放入数组里，在数组上做partition（笔试用）
+ * 	2）分成小、中、大三部分，再把各个部分之间串起来（面试用）
+ * 		小区      等区      大区
+ * 	    小头   -> 等头    ->大头
+ * 	     ↓    ↑    ↓    ↑   ↓
+ * 	    小尾 ->   等尾 ->   大尾
+ * 	  连的时候边界注意：小tail = null 小区不存在，等区做头，等tail = null，等区不存在 大区做头
+ *
+ */
 public class Code03_SmallerEqualBigger {
 
 	public static class Node {
@@ -11,6 +24,7 @@ public class Code03_SmallerEqualBigger {
 		}
 	}
 
+	// 1.荷兰国旗划分法
 	public static Node listPartition1(Node head, int pivot) {
 		if (head == null) {
 			return head;
@@ -57,6 +71,7 @@ public class Code03_SmallerEqualBigger {
 		nodeArr[b] = tmp;
 	}
 
+	// 2.三分法
 	public static Node listPartition2(Node head, int pivot) {
 		Node sH = null; // small head
 		Node sT = null; // small tail
@@ -108,6 +123,7 @@ public class Code03_SmallerEqualBigger {
 		if (eT != null) { // 如果小于区域和等于区域，不是都没有
 			eT.next = mH;
 		}
+		// 判断返回哪个头
 		return sH != null ? sH : (eH != null ? eH : mH);
 	}
 

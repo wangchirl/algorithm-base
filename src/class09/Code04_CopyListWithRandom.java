@@ -3,6 +3,37 @@ package class09;
 import java.util.HashMap;
 
 // 测试链接 : https://leetcode.com/problems/copy-list-with-random-pointer/
+/**
+ * 1、链表拷贝
+ * 	1）next指针
+ * 	2）random指针
+ *
+ * 解题思路：
+ * 	1）容器法 : 遍历链表，存入容器，建立新旧结点关系；再次遍历链表，找到新结点设置next和random结点
+ * 	2）改链表法
+ * 				 null
+ * 		↓----↑    ↑
+ * 		a -> b -> c -> null
+ * 		↓---------↑
+ *                     null null null
+ * 		↓----------↑    ↑     ↑    ↑
+ * 		a -> a' -> b -> b'-> c -> c'-> null
+ * 		↓----↓---------------↑
+ * 			 null
+ *
+ * 	      ↓----------↑   null null
+ * 		↓----↓-----↑    ↑    ↑    ↑
+ * 		a -> a' -> b -> b'-> c -> c'-> null
+ * 		↓----↓---------------↑    ↑
+ * 			 ↓--------------------↑
+ *   1）添加新结点到旧结点后面
+ *   2）设置新结点的 random结点
+ *   3）分离新旧结点
+ *   a a' 一对一对的遍历
+ *   a' = a.next
+ *   a.random 设置 a'.random：a'.random = a.random.next
+ *   分离新旧结点
+ */
 public class Code04_CopyListWithRandom {
 
 	public static class Node {
@@ -16,7 +47,7 @@ public class Code04_CopyListWithRandom {
 			this.random = null;
 		}
 	}
-
+	// 1.容器法
 	public static Node copyRandomList1(Node head) {
 		// key 老节点
 		// value 新节点
@@ -38,6 +69,7 @@ public class Code04_CopyListWithRandom {
 		return map.get(head);
 	}
 
+	// 2.改链表法
 	public static Node copyRandomList2(Node head) {
 		if (head == null) {
 			return null;

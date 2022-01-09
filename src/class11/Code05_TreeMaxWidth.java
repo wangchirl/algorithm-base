@@ -4,6 +4,15 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * 1、求二叉树最宽的层，有多少结点
+ * 	1）容器法
+ * 	1）按层遍历法
+ * 		1.记录当前层的结尾
+ * 		2.记录下一层的结尾
+ * 		3.记录每层的最大次数
+ *
+ */
 public class Code05_TreeMaxWidth {
 
 	public static class Node {
@@ -63,15 +72,18 @@ public class Code05_TreeMaxWidth {
 		int curLevelNodes = 0; // 当前层的节点数
 		while (!queue.isEmpty()) {
 			Node cur = queue.poll();
+			// 当前结点的左结点
 			if (cur.left != null) {
 				queue.add(cur.left);
 				nextEnd = cur.left;
 			}
+			// 当前结点的右结点
 			if (cur.right != null) {
 				queue.add(cur.right);
 				nextEnd = cur.right;
 			}
 			curLevelNodes++;
+			// 当前结点是尾结点则重新设置状态值，并计算出最宽的层
 			if (cur == curEnd) {
 				max = Math.max(max, curLevelNodes);
 				curLevelNodes = 0;

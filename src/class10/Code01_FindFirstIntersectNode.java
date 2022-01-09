@@ -1,11 +1,34 @@
 package class10;
 
+/**
+ * 1、给定两个可能有环也可能无环的单链表，头节点head1和head2。
+ * 	 请实现一个函数，如果两个链表相交，请返回相交的 第一个节点。如果不相交，返回null
+ * 【要求】
+ *  如果两个链表长度之和为N，时间复杂度请达到O(N)，额外空间复杂度 请达到O(1)。
+ *
+ *  思路：
+ *  1）判断是否有环，有环返回入环结点
+ *  	- hash 表法
+ *  	- 快慢指针法：
+ *  		1.快慢指针停在起始，慢指针一次一步，快指针一次两步，如果快指针指到了 null，表示无环
+ *  		2.如果没有指到null，那么一直继续，直到快慢指针相遇
+ *  		3.快慢指针相遇时，快指针回到起始位置，一次一步跳
+ *  		4.当快慢指针再次相遇时，此时的节点即是入环结点
+ *  2）两个链表是否有环
+ *    	- 如果都无环，可能存在相交的点
+ *    		1.容器法
+ *    		2.判断2个链表的end结点是否相等，相等则相交，那么求出2个链表的长度
+ *    	      长链表先走差值步，然后一起走，判断二者走过的结点是否相等，相等时即为入环结点
+ *    	-一个有环一个无环，不可能相交
+ *    	- 两个都有环：可能相交，也可能不相交
+ *    		1.不相交 -> 独立成环
+ *    		2.相交 -> 环外相交（入环结点相等），环上相交（入环结点不相等）
+ */
 public class Code01_FindFirstIntersectNode {
 
 	public static class Node {
 		public int value;
 		public Node next;
-
 		public Node(int data) {
 			this.value = data;
 		}
@@ -88,6 +111,7 @@ public class Code01_FindFirstIntersectNode {
 	public static Node bothLoop(Node head1, Node loop1, Node head2, Node loop2) {
 		Node cur1 = null;
 		Node cur2 = null;
+		// 1.环外相交
 		if (loop1 == loop2) {
 			cur1 = head1;
 			cur2 = head2;
@@ -113,6 +137,8 @@ public class Code01_FindFirstIntersectNode {
 			}
 			return cur1;
 		} else {
+			// 2.环内相交或独立成环
+			// 环内查找，如果查找过程中遇到了 loop2，则相交，否则不相交
 			cur1 = loop1.next;
 			while (cur1 != loop1) {
 				if (cur1 == loop2) {

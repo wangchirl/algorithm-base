@@ -5,6 +5,12 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.TreeMap;
 
+/**
+ * 1、比较器：
+ * < 0 的第一个元素放前面
+ * > 0 的第二个元素放前面
+ * = 0 的谁前谁后都一样
+ */
 public class Code01_Comparator {
 
 	public static class Student {

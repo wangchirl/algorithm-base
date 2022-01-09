@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 // 本题测试链接：https://leetcode.com/problems/encode-n-ary-tree-to-binary-tree
+
+/**
+ * 1、将一颗多叉树转为二叉树
+ * 	  将转后的二叉树转为原来的多叉树
+ *
+ * 	思路：每一个多叉树结点的孩子，放在以这个结点为头的二叉树的左树右边界上（或者是右树左边界上）
+ *
+ */
 public class Code03_EncodeNaryTreeToBinaryTree {
 
 	// 提交时不要提交这个类
@@ -47,17 +55,21 @@ public class Code03_EncodeNaryTreeToBinaryTree {
 			return head;
 		}
 
+		// 深度优先
 		private TreeNode en(List<Node> children) {
 			TreeNode head = null;
 			TreeNode cur = null;
 			for (Node child : children) {
 				TreeNode tNode = new TreeNode(child.val);
+				// 多叉树的第一个元素
 				if (head == null) {
 					head = tNode;
 				} else {
+					// 往右挂
 					cur.right = tNode;
 				}
 				cur = tNode;
+				// 左树
 				cur.left = en(child.children);
 			}
 			return head;

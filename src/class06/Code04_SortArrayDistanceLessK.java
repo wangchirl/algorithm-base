@@ -3,6 +3,12 @@ package class06;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
+/**
+ * 1、给定一个数组，排好序元素移动的距离不超过K
+ *  1）建立长度为K的小根堆
+ *  2）弹出小根堆的堆顶元素放在 0 位置
+ *  3）加入 K + 1 的元素，再弹出小根堆的堆顶元素，放在 1 位置，周而复始
+ */
 public class Code04_SortArrayDistanceLessK {
 
 	public static void sortedArrDistanceLessK(int[] arr, int k) {
@@ -13,14 +19,17 @@ public class Code04_SortArrayDistanceLessK {
 		PriorityQueue<Integer> heap = new PriorityQueue<>();
 		int index = 0;
 		// 0...K-1
+		// 建立长度为K的小根堆
 		for (; index <= Math.min(arr.length - 1, k - 1); index++) {
 			heap.add(arr[index]);
 		}
 		int i = 0;
+		// 加入一个元素，弹出堆顶元素
 		for (; index < arr.length; i++, index++) {
 			heap.add(arr[index]);
 			arr[i] = heap.poll();
 		}
+		// 最后弹出所有堆中的元素
 		while (!heap.isEmpty()) {
 			arr[i++] = heap.poll();
 		}

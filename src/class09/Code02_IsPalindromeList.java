@@ -2,12 +2,19 @@ package class09;
 
 import java.util.Stack;
 
+/**
+ * 1、判断单链表是否为回文
+ *  1）栈法 -> 全部入栈，出栈与链表遍历同时对比
+ *  2）改链表 ： a -> b -> c -> d -> e
+ *  		    a -> b -> c <- d <- e
+ *  	快慢指针找到中点 和 R
+ *
+ */
 public class Code02_IsPalindromeList {
 
 	public static class Node {
 		public int value;
 		public Node next;
-
 		public Node(int data) {
 			this.value = data;
 		}
@@ -67,8 +74,6 @@ public class Code02_IsPalindromeList {
 			n2 = n2.next.next; // n2 -> end
 		}
 		// n1 中点
-		
-		
 		n2 = n1.next; // n2 -> right part first node
 		n1.next = null; // mid.next -> null
 		Node n3 = null;

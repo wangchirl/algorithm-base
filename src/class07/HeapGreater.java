@@ -5,15 +5,20 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-/*
- * T一定要是非基础类型，有基础类型需求包一层
+/**
+ * 1、加强堆
+ * 	1）堆结构
+ * 	2）反向索引表
+ * 	3）堆大小
+ * 	4）比较器
+ * 	堆调整时，反向索引表同步调整
  */
 public class HeapGreater<T> {
 
-	private ArrayList<T> heap;
-	private HashMap<T, Integer> indexMap;
-	private int heapSize;
-	private Comparator<? super T> comp;
+	private ArrayList<T> heap; // 堆结构
+	private HashMap<T, Integer> indexMap; // 反向索引表
+	private int heapSize; // 堆大小
+	private Comparator<? super T> comp; // 比较器
 
 	public HeapGreater(Comparator<T> c) {
 		heap = new ArrayList<>();
@@ -38,34 +43,55 @@ public class HeapGreater<T> {
 		return heap.get(0);
 	}
 
+	// 添加元素
 	public void push(T obj) {
+		// 加入堆
 		heap.add(obj);
+		// 加入反向索引表
 		indexMap.put(obj, heapSize);
+		// 调整堆
 		heapInsert(heapSize++);
 	}
 
+	// 弹出堆顶元素
 	public T pop() {
+		// 获取要返回的堆顶元素
 		T ans = heap.get(0);
+		// 堆顶元素与堆的最后一个元素交换
 		swap(0, heapSize - 1);
+		// 反向索引表异常弹出的元素
 		indexMap.remove(ans);
+		// 堆中删除最后一个元素，堆大小减一
 		heap.remove(--heapSize);
+		// 堆顶的 0 位置元素重新调整堆结构
 		heapify(0);
 		return ans;
 	}
 
+	// 删除堆中元素
 	public void remove(T obj) {
+		// 拿堆中最后一个元素与要删除的元素进行交换
 		T replace = heap.get(heapSize - 1);
+		// 要删除元素的下标
 		int index = indexMap.get(obj);
+		// 索引表删除要删除的元素
 		indexMap.remove(obj);
+		// 堆中删除最后一个元素，堆大小减一
 		heap.remove(--heapSize);
+		// 如果要删除的元素不是最后一个元素的情况下才进行调整
 		if (obj != replace) {
+			// 将原堆中最后一个元素设置到删除的元素位置
 			heap.set(index, replace);
+			// 更新索引表
 			indexMap.put(replace, index);
+			// 重新调整堆
 			resign(replace);
 		}
 	}
 
+	// 修改对象后重写调整堆
 	public void resign(T obj) {
+		// 网上推或者往下推，二者只会走一个
 		heapInsert(indexMap.get(obj));
 		heapify(indexMap.get(obj));
 	}
@@ -100,6 +126,7 @@ public class HeapGreater<T> {
 		}
 	}
 
+	// 交换元素，同步更新索引表
 	private void swap(int i, int j) {
 		T o1 = heap.get(i);
 		T o2 = heap.get(j);
