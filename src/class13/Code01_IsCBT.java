@@ -2,6 +2,22 @@ package class13;
 
 import java.util.LinkedList;
 
+/**
+ * 二叉树递归套路
+ *
+ * 1、判断一棵树是否完全二叉树
+ *
+ * 	思路：
+ * 	1）左树满，右树满，左树高度=右树高度
+ * 	2）左完全，右树满，左树高度=右树高度+1
+ * 	3）左树满，右树满，左树高度=右树高度+1
+ * 	4）左树满，右完全，左树高度=右树高度
+ *
+ * 		 1
+ * 	  2		3
+ * 	4	5 6   7
+ *
+ */
 public class Code01_IsCBT {
 
 	public static class Node {
@@ -70,7 +86,9 @@ public class Code01_IsCBT {
 		}
 		Info leftInfo = process(x.left);
 		Info rightInfo = process(x.right);
+		// 1.当前树高度
 		int height = Math.max(leftInfo.height, rightInfo.height) + 1;
+		// 2.当前是否满二叉树
 		boolean isFull = leftInfo.isFull && rightInfo.isFull && leftInfo.height == rightInfo.height;
 		boolean isCBT = false;
 		if (leftInfo.isFull && rightInfo.isFull && leftInfo.height == rightInfo.height) {

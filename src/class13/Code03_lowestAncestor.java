@@ -4,6 +4,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * 二叉树递归套路
+ * 1、求二叉树2个结点的最低公共祖先（父节点）
+ *
+ * 	思路：
+ * 	1.与X结点无关（X不是最低汇聚点）
+ * 		- 左树找到了最低公共祖先
+ * 		- 右树找到了最低公共祖先
+ * 	2.与X结点有关（X是最低公共祖先）
+ * 		- X左右子树 a,b 不全
+ * 			X是a
+ * 			X是b
+ * 		左右找到了a,b，那么最低公共祖先就是X
+ *
+ * 	Info {
+ * 	    bool findA;
+ * 	    bool findB;
+ * 	    Node lower;
+ * 	}
+ */
 public class Code03_lowestAncestor {
 
 	public static class Node {

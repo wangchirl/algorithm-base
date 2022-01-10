@@ -4,6 +4,23 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.TreeSet;
 
+/**
+ * 贪心算法
+ * 	1）最自然智慧的算法
+ * 	2）用一种局部最功利的标准，总是做出在当前看来是最好的选择
+ * 	3）难点在于证明局部最功利的标准可以得到全局最优解
+ * 	4）对于贪心算法的学习主要以增加阅历和经验为主
+ *
+ * 	1、给定一个由字符串组成的数组strs，
+ * 	   必须把所有的字符串拼接起来，
+ * 	   返回所有可能的拼接结果中，字典序最小的结果
+ *
+ *	字符串长度不一样的情况：短的字符串后面添加最小的字符
+ *
+ *	失败的贪心：所有字符串按字典序排序后进行拼接（b,ba）=> （b0，ba）=> bba 其实最小的是 bab
+ *	成功的贪心：按字符拼接后的字典序排序 a+b < b+a
+ *
+ */
 public class Code05_LowestLexicography {
 
 	public static String lowestString1(String[] strs) {

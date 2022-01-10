@@ -2,6 +2,20 @@ package class14;
 
 import java.util.HashSet;
 
+/**
+ * 1、贪心算法
+ *	给定一个字符串str，只由‘X’和‘.’两种字符构成。
+ * ‘X’表示墙，不能放灯，也不需要点亮
+ * ‘.’表示居民点，可以放灯，需要点亮
+ * 如果灯放在i位置，可以让i-1，i和i+1三个位置被点亮
+ * 返回如果点亮str中所有需要点亮的位置，至少需要几盏灯
+ *
+ * 思路：
+ * 	1）i 位置是 X，直接跳到 i+1 位置继续看
+ * 	2）i 位置是 .,看 i+1 位置，如果 i+1位置是X，点灯，跳到 i+2位置继续看
+ * 	3）i 位置是 . 且 i+1 位置也是 .,看 i+2位置，如果 i+2位置是 X，i位置或i+1位置随便点一个灯，跳到i+3位置继续看
+ * 	4）i 位置是 . 且 i+1 位置也是 . 且 i+2位置还是 .,那么在 i+1 位置点灯，跳到 i+3 位置继续看
+ */
 public class Code01_Light {
 
 	public static int minLight1(String road) {
@@ -42,16 +56,21 @@ public class Code01_Light {
 		int i = 0;
 		int light = 0;
 		while (i < str.length) {
+			// i位置是X,跳到下一个继续看
 			if (str[i] == 'X') {
 				i++;
 			} else {
+				// i位置是 . , 都需要点一个灯
 				light++;
+				// 到最后了，提前结束
 				if (i + 1 == str.length) {
 					break;
 				} else { // 有i位置  i+ 1   X  .
+					// i 位置是 .,i+1位置是X，点灯，跳到 i+2位置继续看
 					if (str[i + 1] == 'X') {
 						i = i + 2;
 					} else {
+						// i位置是.且i+1位置也是.,i+2位置是否为.都需要点灯，跳到 i+3位置继续看
 						i = i + 3;
 					}
 				}
