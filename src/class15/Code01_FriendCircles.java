@@ -3,6 +3,14 @@ package class15;
 // 本题为leetcode原题
 // 测试链接：https://leetcode.com/problems/friend-circles/
 // 可以直接通过
+
+/**
+ * 1、并查集问题
+ * 	1）朋友圈
+ *	  - 使用数组的方式实现并查集
+ *	  - 每个人认识自己，所以只需要对半区进行 union
+ *	  - union 后的最终拥有的集合的个数即是朋友圈个数
+ */
 public class Code01_FriendCircles {
 
 	public static int findCircleNum(int[][] M) {

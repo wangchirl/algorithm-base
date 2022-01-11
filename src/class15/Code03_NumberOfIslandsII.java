@@ -7,6 +7,13 @@ import java.util.List;
 // 本题为leetcode原题
 // 测试链接：https://leetcode.com/problems/number-of-islands-ii/
 // 所有方法都可以直接通过
+
+/**
+ * 1、并查集问题
+ * 	1）岛问题2 - 岛是空的，一个一个空降位置，每一步有多少个岛
+ *
+ *
+ */
 public class Code03_NumberOfIslandsII {
 
 	public static List<Integer> numIslands21(int m, int n, int[][] positions) {

@@ -8,12 +8,27 @@ import java.util.Stack;
 // 本题为leetcode原题
 // 测试链接：https://leetcode.com/problems/number-of-islands/
 // 所有方法都可以直接通过
+
+/**
+ * 1、并查集问题
+ * 	1）岛问题1 - 岛数据已准备好
+ * 	 - 实现方式1：感染
+ * 	 	是 1 的话，岛的数量+1，那么上下左右（越界或当前位数不是是1停）去感染，将 1 改为 0
+ *
+ * 	 - 实现方式2：并查集
+ * 	 	是 1 的话，查看左上是否为 1，是 1 那么就 union
+ * 	 	这里都是 1，需要进行区分，可以使用一个对象地址来替代每一个位置的 1
+ *
+ * 	 - 实现方式3：并查集 - 二维数组转一维数组
+ * 	 	公式：(i,j)位置在一维数组的位置为 i * 列 + j
+ */
 public class Code02_NumberOfIslands {
 
 	public static int numIslands3(char[][] board) {
 		int islands = 0;
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[0].length; j++) {
+				// 是1 ，岛+1.去感染
 				if (board[i][j] == '1') {
 					islands++;
 					infect(board, i, j);
@@ -29,10 +44,10 @@ public class Code02_NumberOfIslands {
 			return;
 		}
 		board[i][j] = 0;
-		infect(board, i - 1, j);
-		infect(board, i + 1, j);
-		infect(board, i, j - 1);
-		infect(board, i, j + 1);
+		infect(board, i - 1, j); // 上
+		infect(board, i + 1, j); // 下
+		infect(board, i, j - 1); // 左
+		infect(board, i, j + 1); // 右
 	}
 
 	public static int numIslands1(char[][] board) {
@@ -49,23 +64,29 @@ public class Code02_NumberOfIslands {
 			}
 		}
 		UnionFind1<Dot> uf = new UnionFind1<>(dotList);
+		// 第 0 行
 		for (int j = 1; j < col; j++) {
 			// (0,j)  (0,0)跳过了  (0,1) (0,2) (0,3)
 			if (board[0][j - 1] == '1' && board[0][j] == '1') {
 				uf.union(dots[0][j - 1], dots[0][j]);
 			}
 		}
+		// 第 0 列
 		for (int i = 1; i < row; i++) {
 			if (board[i - 1][0] == '1' && board[i][0] == '1') {
 				uf.union(dots[i - 1][0], dots[i][0]);
 			}
 		}
+		// 普遍位置
 		for (int i = 1; i < row; i++) {
 			for (int j = 1; j < col; j++) {
+				// 当前位置是 1
 				if (board[i][j] == '1') {
+					// 左边是 1
 					if (board[i][j - 1] == '1') {
 						uf.union(dots[i][j - 1], dots[i][j]);
 					}
+					// 上边是 1
 					if (board[i - 1][j] == '1') {
 						uf.union(dots[i - 1][j], dots[i][j]);
 					}
@@ -167,6 +188,7 @@ public class Code02_NumberOfIslands {
 		return uf.sets();
 	}
 
+	// 将二维数组转一维数组，公式：(i,j) = i * 列 + j
 	public static class UnionFind2 {
 		private int[] parent;
 		private int[] size;
