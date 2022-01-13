@@ -5,26 +5,55 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 
 // no negative weight
+
+/**
+ *	1、单元最小距离问题 - 有向图 -贪心算法
+ *	  一个源点到所有结点的最小距离问题
+ *
+ *	Dijkstra 算法：
+ *
+ * 	思路：
+ * 	1）Dijkstra算法必须指定一个源点
+ * 	2）生成一个源点到各个点的最小距离表，一开始只有一条记录，即原点到自己的最小距离为0，源点到其他所有点的最小距离都为正无穷大
+ * 	3）从距离表中拿出没拿过记录里的最小记录，通过这个点发出的边，更新源点到各个点的最小距离表，不断重复这一步
+ * 	4）源点到所有的点记录如果都被拿过一遍，过程停止，最小距离表得到了
+ *
+ * 	加强版本 Dijkstra 算法：
+ *
+ *
+ */
 public class Code06_Dijkstra {
 
+	/**
+	 * 普通版本的 Dijkstra 算法
+	 */
 	public static HashMap<Node, Integer> dijkstra1(Node from) {
 		HashMap<Node, Integer> distanceMap = new HashMap<>();
+		// 源点到自己的距离默认为 0
 		distanceMap.put(from, 0);
 		// 打过对号的点
 		HashSet<Node> selectedNodes = new HashSet<>();
+		// 找到排除打过对号的点后，选择出距离最小的点
 		Node minNode = getMinDistanceAndUnselectedNode(distanceMap, selectedNodes);
 		while (minNode != null) {
 			//  原始点  ->  minNode(跳转点)   最小距离distance
+			// 拿到当前距离最小的结点所拥有的距离
 			int distance = distanceMap.get(minNode);
+			// 遍历当前结点所有的边
 			for (Edge edge : minNode.edges) {
+				// 拿到边的另一头的结点
 				Node toNode = edge.to;
+				// 如果另一头的结点没有进入过距离表，表示是无穷大，那么就生成距离表记录，距离为此时边权重+前一个结点所拥有的距离
 				if (!distanceMap.containsKey(toNode)) {
 					distanceMap.put(toNode, distance + edge.weight);
-				} else { // toNode 
+				} else { // toNode
+					// 如果是已经进入过距离表的，那么就PK出最小的距离
 					distanceMap.put(edge.to, Math.min(distanceMap.get(toNode), distance + edge.weight));
 				}
 			}
+			// 放入当前结点到打钩的表中
 			selectedNodes.add(minNode);
+			// 再次从距离表中拿出没有打对号的距离最小的结点，周而复始
 			minNode = getMinDistanceAndUnselectedNode(distanceMap, selectedNodes);
 		}
 		return distanceMap;

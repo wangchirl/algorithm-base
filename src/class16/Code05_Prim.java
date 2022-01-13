@@ -6,6 +6,23 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 // undirected graph only
+
+/**
+ * 1、最小生成树 - 无向图
+ *
+ * 	1）P 算法 - 考察图的点，看点的边，选择最小的边 - 贪心算法
+ * 	  1.选择一个点，遍历点上的每条边，选择最小的边
+ * 	  2.将边的另一个点进行解锁，查看这个点的边，加入到小顶堆中，继续选最小的边
+ * 	  3.如果发现最小边的另一个结点已经被解锁过了，选择下一个边，周而复始
+ *
+ * 	思路：
+ * 	1）可以从任意节点出发来寻找最小生成树
+ * 	2）某个点加入到被选取的点中后，解锁这个点出发的所有新的边
+ * 	3）在所有解锁的边中选最小的边，然后看看这个边会不会形成环
+ * 	4）如果会，不要当前边，继续考察剩下解锁的边中最小的边，重复3）
+ * 	5）如果不会，要当前边，将该边的指向点加入到被选取的点中，重复2）
+ * 	6）当所有点都被选取，最小生成树就得到了
+ */
 public class Code05_Prim {
 
 	public static class EdgeComparator implements Comparator<Edge> {
@@ -20,14 +37,9 @@ public class Code05_Prim {
 	public static Set<Edge> primMST(Graph graph) {
 		// 解锁的边进入小根堆
 		PriorityQueue<Edge> priorityQueue = new PriorityQueue<>(new EdgeComparator());
-
 		// 哪些点被解锁出来了
 		HashSet<Node> nodeSet = new HashSet<>();
-		
-		
-		
 		Set<Edge> result = new HashSet<>(); // 依次挑选的的边在result里
-
 		for (Node node : graph.nodes.values()) { // 随便挑了一个点
 			// node 是开始点
 			if (!nodeSet.contains(node)) {
@@ -47,7 +59,7 @@ public class Code05_Prim {
 					}
 				}
 			}
-			// break;
+			// break; 可以break，但是可能存在森林的情况
 		}
 		return result;
 	}
