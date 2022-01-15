@@ -1,5 +1,25 @@
 package class18;
 
+/**
+ * 1、暴力递归到动态规划
+ * 	1）给定一个整型数组arr，代表数值不同的纸牌排成一条线
+ *  玩家A和玩家B依次拿走每张纸牌
+ * 	规定玩家A先拿，玩家B后拿
+ * 	但是每个玩家每次只能拿走最左或最右的纸牌
+ * 	玩家A和玩家B都绝顶聪明
+ * 	请返回最后获胜者的分数。
+ *
+ * 	1.暴力递归
+ * 	  1）先手和后手方法
+ * 	  2）先手：base case 只剩一张时直接拿走，普遍位置左侧或右侧选一种，然后变后手，2种选择中取 max
+ * 	  3）后手：base case 只剩一张时没得拿，返回0，普遍位置只能在先手选择后进行，对手一定会让你得到最少的，取 min
+ *
+ * 	2.缓存法
+ * 	  1）两张表
+ *
+ * 	3.动态规划
+ * 	  1）两张表相互推，填完整个表得出最终结果
+ */
 public class Code02_CardsInLine {
 
 	// 根据规则，返回获胜者的分数
@@ -13,17 +33,23 @@ public class Code02_CardsInLine {
 	}
 
 	// arr[L..R]，先手获得的最好分数返回
+	// 先手方法
 	public static int f1(int[] arr, int L, int R) {
+		// 只剩一张，拿走
 		if (L == R) {
 			return arr[L];
 		}
+		// 拿右边的 或者 拿左边的
 		int p1 = arr[L] + g1(arr, L + 1, R);
 		int p2 = arr[R] + g1(arr, L, R - 1);
+		// 取最大的
 		return Math.max(p1, p2);
 	}
 
 	// // arr[L..R]，后手获得的最好分数返回
+	// 后手方法
 	public static int g1(int[] arr, int L, int R) {
+		// 只剩一张，先手的肯定拿走，后手没有机会拿
 		if (L == R) {
 			return 0;
 		}
@@ -32,11 +58,13 @@ public class Code02_CardsInLine {
 		return Math.min(p1, p2);
 	}
 
+	// 缓存法
 	public static int win2(int[] arr) {
 		if (arr == null || arr.length == 0) {
 			return 0;
 		}
 		int N = arr.length;
+		// 2张表
 		int[][] fmap = new int[N][N];
 		int[][] gmap = new int[N][N];
 		for (int i = 0; i < N; i++) {
@@ -82,6 +110,7 @@ public class Code02_CardsInLine {
 		return ans;
 	}
 
+	// 动态规划
 	public static int win3(int[] arr) {
 		if (arr == null || arr.length == 0) {
 			return 0;
